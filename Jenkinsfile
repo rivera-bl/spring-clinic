@@ -7,11 +7,11 @@ node {
     stage('Test'){
         sh "./gradlew clean test"
     }
-    stage("SonarQube analysis") {
-        steps {
-            withSonarQubeEnv('sonarQubePruebas') {
-                sh './gradlew sonarqube'
+    stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('sonarQubePruebas') {
+                    sh './gradlew sonarqube'
+                }
             }
-        }
     }
 }
