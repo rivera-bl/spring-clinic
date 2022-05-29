@@ -38,10 +38,10 @@ jobs:
   steps:
   - task: SonarCloudPrepare@1
     inputs:
-      SonarCloud: 'Sonarcloud'
-      organization: 'rivera-bl'
-      projectKey: 'rivera-bl_spring-clinic'
-      projectName: 'spring-clinic'
+      SonarCloud: 'Sonar'
+      organization: 'rivverapabblo'
+      projectKey: 'rivera-bl_DevOps-Foundations'
+      projectName: 'DevOps-Foundations'
     displayName: 'Preparing Sonarqube Environment'
 
   - task: Gradle@3
