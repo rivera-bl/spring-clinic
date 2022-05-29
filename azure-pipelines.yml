@@ -4,8 +4,6 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-job: build
-displayName: 'Build'
 steps:
 - task: Gradle@3
   inputs:
