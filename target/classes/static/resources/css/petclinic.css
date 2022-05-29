@@ -2966,6 +2966,7 @@ textarea.form-control-lg {
   font-size: 1.25rem;
   text-decoration: none;
   white-space: nowrap; }
+
   
 .navbar-brand-title {
   padding-top: 0.3125rem;
@@ -2975,6 +2976,7 @@ textarea.form-control-lg {
   background-color: white;
   text-decoration: none;
   white-space: nowrap; }
+
 
 .navbar-nav {
   display: flex;
