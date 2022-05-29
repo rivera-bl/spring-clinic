@@ -17,7 +17,7 @@ jobs:
     inputs:
       gradleWrapperFile: 'gradlew'
       tasks: 'build'
-      publishJUnitResults: true
+      publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
       javaHomeOption: 'JDKVersion'
       sonarQubeRunAnalysis: false
