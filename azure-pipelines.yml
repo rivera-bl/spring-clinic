@@ -67,7 +67,7 @@ jobs:
 
 
 - job: buildimage
-  displayName:  Build Image
+  displayName:  Deploy
   dependsOn: build
   steps:
   - task: DownloadBuildArtifacts@0
