@@ -45,7 +45,7 @@ jobs:
   steps:
   - task: SonarCloudPrepare@1
     inputs:
-      SonarCloud: 'Sonarcloud'
+      SonarCloud: 'sonar-cloud'
       organization: 'fundamentos'
       projectKey: 'fundamentos'
       projectName: 'fundamentos'
