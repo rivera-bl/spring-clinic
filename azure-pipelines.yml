@@ -5,10 +5,10 @@
 
 trigger:
 - feature-pedritoAlejos-interfaz
+- main
 
 pool:
   vmImage: ubuntu-latest
-
 
 jobs:
 - job: build
@@ -18,9 +18,76 @@ jobs:
     inputs:
       gradleWrapperFile: 'gradlew'
       tasks: 'build'
-      publishJUnitResults: true
-      testResultsFiles: '**/TEST-*.xml'
+      publishJUnitResults: false
       javaHomeOption: 'JDKVersion'
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
 
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)'
+      contents: |
+        **/build/libs/spring-petclinic-*.jar
+      targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: appJar
+      publishLocation: 'Container'
+      
+
+
+- job: sonar
+  workspace:
+    clean: all
+  displayName:  Code Review
+  steps:
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'sonar-cloud'
+      organization: 'fundamentos'
+      projectKey: 'fundamentos'
+      projectName: 'fundamentos'
+    displayName: 'Preparing Sonarqube Environment'
+    
+  - task: Gradle@3
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      tasks: "sonarqube"
+      javaHomeOption: 'JDKVersion'
+      sonarQubeRunAnalysis: true
+      sqGradlePluginVersionChoice: 'specify'
+      sonarQubeGradlePluginVersion: '3.3'
+    displayName: 'Analyze current Branch'
+    
+  - task: SonarCloudPublish@1
+    inputs:
+      pollingTimeoutSec: '300'
+    displayName: 'Publish Analysis Results'
+
+
+- job: buildimage
+  displayName:  Deploy
+  dependsOn: build
+  steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'appJar'
+      downloadPath: '$(Pipeline.Workspace)'
+
+  - script: "mkdir -p build/libs; mv $(Pipeline.Workspace)/appJar/build/libs/ build/; chmod -R 555 build/libs"  
+    displayName:  Se mueve jar a carpeta raiz
+
+  
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'docker-registry'
+      command: 'login'
+  - task: Docker@2
+    inputs:
+      repository: 'pedroalejosb/spring-clinic'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
