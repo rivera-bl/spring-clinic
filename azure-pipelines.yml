@@ -26,7 +26,7 @@ jobs:
     inputs:
       sourceFolder: '$(Build.SourcesDirectory)'
       contents: |
-        **/build/libs/testing-*.jar
+        **/build/libs/spring-petclinic-*.jar
       targetFolder: '$(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
