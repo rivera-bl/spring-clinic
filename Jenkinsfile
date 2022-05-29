@@ -7,11 +7,10 @@ node {
     stage('Test'){
         sh "./gradlew clean test"
     }
-    stage("build & SonarQube analysis") {
-        agent any
+    stage("SonarQube analysis") {
         steps {
-            withSonarQubeEnv('My SonarQube Server') {
-            sh 'mvn clean package sonar:sonar'
+            withSonarQubeEnv('SonarQubePruebas') {
+                sh './gradlew sonarqube'
             }
         }
     }
