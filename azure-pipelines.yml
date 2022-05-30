@@ -31,7 +31,13 @@ steps:
   inputs:
     SonarCloud: 'Sonar'
     organization: 'rivverapabblo'
-    projectKey: 'rivera-bl_DevOps-Foundations'
+    scannerMode: 'Other'
+    extraProperties: |
+      # Additional properties that will be passed to the scanner,
+      # Put one key=value per line, example:
+      # sonar.exclusions=**/*.bin
+      sonar.projectKey=rivverapabblo_DevOps-Foundations
+      sonar.projectName=DevOps-Foundations
     projectName: 'DevOps-Foundations'
   displayName: 'Preparing Sonarqube Environment'
 
