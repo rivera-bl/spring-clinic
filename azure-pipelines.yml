@@ -30,6 +30,7 @@ jobs:
       publishLocation: 'Container'
 
 - job: Sonar
+  dependsOn: Build
   steps:
   - task: SonarCloudPrepare@1
     inputs:
