@@ -62,7 +62,9 @@ jobs:
     displayName: 'Publish Analysis Results'
 
 - job: Docker
-  dependsOn: Build
+  dependsOn: 
+    - Build
+    - Sonar
   steps:
   - task: DownloadBuildArtifacts@0
     inputs:
