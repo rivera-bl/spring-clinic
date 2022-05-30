@@ -2,7 +2,7 @@ trigger:
 - feature-pabloRojas-interfaz
 
 pool:
-  vmImage: default
+  default
 
 steps:
 - task: Gradle@3
