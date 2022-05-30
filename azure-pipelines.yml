@@ -20,16 +20,17 @@ jobs:
     inputs:
       sourceFolder: '$(Build.SourcesDirectory)'
       contents: |
-        **/build/libs/testing-*.jar
+        **/build/libs/spring-petclinic-*.jar
       targetFolder: '$(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: appJar
+      artifactName: pet-clinic-jar
       publishLocation: 'Container'
 
 - job: Sonar
+  steps:
   - task: SonarCloudPrepare@1
     inputs:
       SonarCloud: 'Sonar'
@@ -58,3 +59,15 @@ jobs:
     inputs:
       pollingTimeoutSec: '300'
     displayName: 'Publish Analysis Results'
+
+- job: Docker
+  dependsOn: Build
+  steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'pet-clinic-jar'
+      downloadPath: '$(Pipeline.Workspace)'
+
+  - script: "mkdir -p build/libs; mv $(Pipeline.Workspace)/pet-clinic-jar/build/libs/ build/; chmod -R 555 build/libs"  
