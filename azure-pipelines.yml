@@ -76,6 +76,6 @@ jobs:
     displayName: Push image
     inputs:
       containerRegistry: |
-        $(dockerHub)
+        Dockerhub
       repository: 'riverablo/devops-final-pet-clinic'
       command: push
